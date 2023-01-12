@@ -1,0 +1,28 @@
+[global_config]
+  title_transmit_bg_color = "#3584e4"
+[keybindings]
+[profiles]
+  [[default]]
+    background_darkness = 0.79
+    background_type = transparent
+    cursor_color = "#aaaaaa"
+    font = Monospace Bold 11
+    palette = "#2e3436:#cc0000:#1c71d8:#e5a50a:#1c71d8:#75507b:#06989a:#d3d7cf:#555753:#ef2929:#26a269:#e5a50a:#1a5fb4:#ad7fa8:#34e2e2:#eeeeec"
+    use_system_font = False
+  [[Base]]
+    background_darkness = 1.0
+    background_type = transparent
+    cursor_color = "#aaaaaa"
+    font = Monospace Bold 12
+    palette = "#000000:#a51d2d:#26a269:#aa5500:#0000aa:#aa00aa:#00aaaa:#ffa348:#26a269:#c01c28:#3584e4:#ffff55:#1c71d8:#ff55ff:#55ffff:#ff7800"
+    use_system_font = False
+    bold_is_bright = True
+[layouts]
+  [[default]]
+    [[[window0]]]
+      type = Window
+      parent = ""
+    [[[child1]]]
+      type = Terminal
+      parent = window0
+[plugins]
