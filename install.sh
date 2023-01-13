@@ -63,14 +63,14 @@ blueecho "            - Installing dependencies -           "
 blueecho "--------------------------------------------------"
 blueecho ""
 
-dependecy(){
+dependency(){
     # update & upgrade
     apt update && apt upgrade -y
 
     echo -e "${GREEN}[+]${END} up-to-date system"
 
     # install dependencies
-    apt install -y build-essential feh  xclip dconf-cli uuid-runtime curl gnome-tweaks \
+    apt install -y build-essential feh  xclip dconf-cli uuid-runtime curl gnome-tweaks chromium-browser \
     ffmpeg imagemagick libncurses5-dev git make pkg-config vim lxappearance \
     xinput ncdu notepadqq libnotify-bin playerctl neofetch  postgresql postgresql-contrib \
     bat apt-transport-https curl vlc terminator htop numlockx pulseaudio \
@@ -116,15 +116,17 @@ cybertools(){
     bash -c "$(curl -fsSL https://gef.blah.cat/sh)"
     gem install one_gadget
     sudo -H python3 -m pip install ROPgadget
-    python3 -m pip install pwntools
     cd /tmp && git clone https://github.com/radareorg/radare2
     /tmp/radare2/sys/install.sh
-    #wget -k https://github.com/rizinorg/cutter/releases/download/v2.1.2/Cutter-v2.1.2-Linux-x86_64.AppImage -O /bin/cutter_re
-    #chmod +x /bin/cutter_re
+    wget -k https://github.com/rizinorg/cutter/releases/download/v2.1.2/Cutter-v2.1.2-Linux-x86_64.AppImage -O /bin/cutter_re
+    chmod +x /bin/cutter_re
     # add cutter to launcher gnome https://codebysamgan.com/how-to-add-appimage-application-to-menu-in-ubuntu-linux
     #IDA
     wget -k https://out7.hex-rays.com/files/idafree82_linux.run -O /tmp/idafree.run
-    chmod +x /tmp/idafree && /tmp/idafree.run
+    chmod +x /tmp/idafree.run
+    /tmp/idafree.run
+    export PATH="/opt/idafree-8.2:$PATH"
+    mv /opt/idafree-8.2/ida64 /opt/idafree-8.2/ida
     
     blueecho " -- Radio & network --"
 
@@ -156,7 +158,7 @@ cybertools(){
     sudo snap install --classic code
 
     blueecho " -- Misc --"
-    sudo apt install -y keepassxc
+    sudo apt install -y keepassxc smbclient
 
 }
 
@@ -169,38 +171,65 @@ blueecho "--------------------------------------------------"
 blueecho ""
 
 dotfilesnthemes(){
-    #transparency dock
-    gsettings set org.gnome.shell.extensions.dash-to-dock transparency-mode 'FIXED'
-    gsettings set org.gnome.shell.extensions.dash-to-dock background-opacity 0
-
-
+   
     #shell and app thme
-    sudo apt install -y zsh zsh-syntax-highlighting zsh-autosuggestions
-    sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-    git clone https://github.com/zsh-users/zsh-autosuggestions.git $ZSH_CUSTOM/plugins/zsh-autosuggestions
-    git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $ZSH_CUSTOM/plugins/zsh-syntax-highlighting
-    git clone https://github.com/zdharma-continuum/fast-syntax-highlighting.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/fast-syntax-highlighting
-    git clone --depth 1 -- https://github.com/marlonrichert/zsh-autocomplete.git $ZSH_CUSTOM/plugins/zsh-autocomplete
-    chsh -s /bin/zsh
+    #chsh -s /bin/zsh
 
     git clone https://github.com/linuxopsys/ubuntu-to-kali-terminal.git /tmp/ubuntu-to-kali-terminal
     cd /tmp/ubuntu-to-kali-terminal
-    tar -xvf color-schemes.tar
-    tar -xvf kali-dark-theme.tar
-    sudo mv -f usr/share/themes/Kali-Dark /usr/share/themes 
-    bash -c "$(curl -fsSL https://raw.githubusercontent.com/linuxopsys/ubuntu-to-kali-terminal/main/gnome-themes/Kali-Dark.sh)"
+    tar -xvf color-schemes.tar && tar -xvf kali-dark-theme.tar
+    sudo mv /tmp/ubuntu-to-kali-terminal/usr/share/themes/Kali-Dark /usr/share/themes
+    
+    #papirus Icon themes
+    sudo add-apt-repository ppa:papirus/papirus
+    sudo apt install papirus-icon-theme
 
     git clone https://github.com/Y00x/dotfiles.git /tmp/dotfiles
     cd /tmp/dotfiles
 
     chown 1000:1000 -R config/
-    cat  config/.zshrc >> ~/.zshrc
-    cat config/terminator/config >> ~/config/terminator/config
+    cat  config/.zshrc > /home/${USER}/.zshrc
+    #source /home/${USER}/.zshrc
+    mkdir -p /home/${USER}/.config/terminator/
+    cat config/terminator/config > /home/${USER}/.config/terminator/config
 
 }
 
+dotfilesnthemes
+# misc
+blueecho ""
+blueecho "--------------------------------------------------"
+blueecho "                - Other configs -"
+blueecho "--------------------------------------------------"
+blueecho ""
 #smbclient, 
 
+
+python -m pip install -r requirements.txt
+
+# cleaning
+blueecho ""
+blueecho "--------------------------------------------------"
+blueecho "                 - Cleaning files -               "
+blueecho "--------------------------------------------------"
+blueecho ""
+
+
+rm -rf /tmp/*
+rm /etc/apt/sources.list.d/metasploit-framework.list 
+cd
+
+blueecho ""
+blueecho "--------------------------------------------------"
+blueecho "            - Configuration complete. -           "
+blueecho "             Add app to ubuntu laucher :          "
+blueecho "https://codebysamgan.com/how-to-add-appimage-application-to-menu-in-ubuntu-linux"
+blueecho "      You can switch themes in gnome tweak        "
+blueecho "Use ida command to start ida and cutter_re to start cutter"
+blueecho "--------------------------------------------------"
+blueecho ""
+
+gnome-tweaks
 #exegol, nmap, wireshark, ffuf, postman,vscode, metasploit
 #cd /tmp && git clone https://github.com/radareorg/radare2
 #/tmp/radare2/sys/install.sh
@@ -210,3 +239,4 @@ dotfilesnthemes(){
 #conclusion tools installé + install themes tuto
 
 #rm /etc/apt/sources.list.d/metasploit-framework.list 
+#TODO: Ppirus + Kali themes
