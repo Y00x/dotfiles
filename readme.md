@@ -1,4 +1,5 @@
-![banner.png](./.github/preview.png)
+![banner](./.github/banner.png)
+![preview](./.github/preview.png)
 
 <p align="center">
     My dotfiles repository and installation scripts.
